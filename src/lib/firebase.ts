@@ -1,11 +1,12 @@
 import { initializeApp } from 'firebase/app';
 // import * as firebase from 'firebase/app';
-import { getFirestore, collection, getDocs, orderBy, query } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, orderBy, query, addDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 // import Constants from 'expo-constants';
+// types
 import { Content } from '../types/content'
-
 import { User, initialUser } from '../types/user';
+import { Review } from "../types/review";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDCiAyghu3sJRDkESYFqj2P_cHPqCK4KUM",
@@ -31,11 +32,12 @@ export const getContents = async () => {
         orderBy('score_fb', 'desc')
     );
     const snapshot = await getDocs(dataCol);
-    const contents = snapshot.docs.map(doc => doc.data() as Content);
-
-    return contents;
+    const contents = snapshot.docs.map(
+        (doc) => ({ ...doc.data(), id: doc.id } as Content)
+    );
     // console.log(contents);
-}
+    return contents;
+};
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -64,6 +66,26 @@ export const signin = async () => {
     });
 };
 
+export const addReview = async (contentId: string, review: Review) => {
+    // await firebase
+    //     .firestore()
+    //     .collection("shops")
+    //     .doc(shopId)
+    //     .collection("reviews")
+    //     .add(review);
+
+    const Ref = doc(collection(db, "contents"));
+    // 入力したコンテンツIDの中にreviewsを入れたい
+    // const idknow= (doc) => ({ ...doc.data(), id: doc.id } as Review)
+    const newRef = doc(collection(Ref, "reviews"));
+    // このデータはレビューのテキストとスコアが渡るようにしたい
+    const data = {
+        contentId: "",
+        review: "",
+    };
+    await setDoc(newRef, data);
+};
+
 // export const signin = async () => {
 //     const userCredential = await firebase.auth().signInAnonymously();
 //     const { uid } = userCredential.user;
@@ -81,3 +103,4 @@ export const signin = async () => {
 //         } as User;
 //     }
 // };
+

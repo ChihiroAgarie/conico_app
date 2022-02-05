@@ -1,4 +1,5 @@
 export type Content = {
+    id?: string;
     age_fb: string;
     pref_fb: string;
     title_fb: string;
