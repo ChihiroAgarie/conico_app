@@ -24,7 +24,8 @@ type Props = {
 };
 
 export const ContentItem: React.FC<Props> = ({ content, onPress }: Props) => {
-    const { img_fb, age_fb, pref_fb, title_fb, score_fb } = content;
+    // const { img_fb, age_fb, pref_fb, title_fb, score_fb } = content;
+    const { img_fb, age_fb, pref_fb, title_fb } = content;
     return (
         <TouchableOpacity style={styles.container}
             onPress={onPress}>
@@ -32,7 +33,7 @@ export const ContentItem: React.FC<Props> = ({ content, onPress }: Props) => {
             <Text style={styles.nameText}>{age_fb}歳〜</Text>
             <Text style={styles.nameText}>{pref_fb}</Text>
             <Text style={styles.placeText}>{title_fb}</Text>
-            <Stars score={score_fb} />
+            {/* <Stars score={score_fb} /> */}
         </TouchableOpacity>
     );
 };

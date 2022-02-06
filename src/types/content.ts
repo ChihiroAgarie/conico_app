@@ -5,6 +5,6 @@ export type Content = {
     title_fb: string;
     img_fb: string;
     detail_fb: string;
-    score_fb: number;
+    // score_fb: number;
     place_fb: string;
 }

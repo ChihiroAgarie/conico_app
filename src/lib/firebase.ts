@@ -29,7 +29,7 @@ export const getContents = async () => {
 
     const dataCol = query(
         collection(db, 'contents'),
-        orderBy('score_fb', 'desc')
+        // orderBy('score_fb', 'desc')
     );
     const snapshot = await getDocs(dataCol);
     const contents = snapshot.docs.map(
